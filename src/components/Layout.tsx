@@ -12,10 +12,10 @@ const Layout = ({ children, title }: Props) => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>React Pokédex {title && `| ${title}`}</title>
+        <title>React Hoteldex {title && `| ${title}`}</title>
         <meta
           name="description"
-          content="a simple pokédex for your pokemon needs."
+          content="a simple Hoteldex for your pokemon needs."
         />
       </Helmet>
       <Navbar />

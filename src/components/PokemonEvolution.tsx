@@ -1,11 +1,10 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image-loading";
-import { Pokemon } from "../features/pokemonSlice";
+import { Hotel } from "../features/pokemonSlice";
 import { PokemonTypePlaceholders } from "../globals";
 import { leftPad } from "../utils/leftPad";
 
 import { AiOutlineCaretDown, AiOutlineCaretRight } from "react-icons/ai";
-import { ChainLink } from "../features/evolutionChainSlice";
 import { useHistory } from "react-router-dom";
 
 const MaskSize = 200;
@@ -27,25 +26,17 @@ const ImageContainerStyling = {
 };
 
 type Props = {
-  pokemon: Pokemon;
-  chain: ChainLink | undefined;
+  hotel: Hotel;
   selectedBackgroundColor: { light: string; medium: string };
 };
 
 const PokemonEvolution = ({
-  pokemon,
-  chain,
+  hotel,
   selectedBackgroundColor,
 }: Props) => {
   const history = useHistory();
-  const imagePlaceholder = pokemon.types.map(({ type }) => {
-    const [[, image]] = Object.entries(PokemonTypePlaceholders).filter(
-      ([key, _]) => key === type.name
-    );
-
-    return image;
-  });
-  const minLevel = chain?.evolutionDetails[0]?.minLevel;
+  const imagePlaceholder = hotel.icon;
+  const minLevel = undefined;
 
   return (
     <div className="mb-5 lg:mb-0 lg:flex lg:flex-row w-full">
@@ -59,7 +50,7 @@ const PokemonEvolution = ({
             className="rounded-full absolute inset-x-auto mx-auto z-0 inline-block left-0 right-0"
           />
           <div
-            onClick={() => history.push(`/pokemons/${pokemon.id}`)}
+            onClick={() => history.push(`/pokemons/${hotel.placeId}`)}
             className="cursor-pointer transform hover:-translate-y-2 transition-all duration-300"
             style={{
               ...ImageContainerStyling,
@@ -68,23 +59,23 @@ const PokemonEvolution = ({
           >
             <ProgressiveImage
               preview={imagePlaceholder[0]}
-              src={pokemon.sprites.frontDefault}
+              src={hotel.icon}
               render={(src, style) => (
-                <img src={src} style={style} alt={pokemon.name} />
+                <img src={src} style={style} alt={hotel.name} />
               )}
             />
           </div>
         </div>
         <p className="mt-1 text-sm text-black font-semibold">
-          #{leftPad(pokemon.id, 3)}
+          #{hotel.placeId}
         </p>
-        <h1 className="capitalize font-semibold text-xl">{pokemon.name}</h1>
+        <h1 className="capitalize font-semibold text-xl">{hotel.name}</h1>
         <p className="text-black text-sm font-semibold text-opacity-75">
           {minLevel && `Level ${minLevel}`}
         </p>
       </div>
       <p className="flex items-center mx-auto mt-2 mb-4 lg:mb-0 lg:mt-0">
-        {chain?.evolvesTo.length !== 0 && (
+        {undefined !== 0 && (
           <>
             <AiOutlineCaretDown
               className="block mx-auto lg:hidden opacity-75"

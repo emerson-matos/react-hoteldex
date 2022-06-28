@@ -31,7 +31,7 @@
 <p align="center">
 
   <h3 align="center">
-React Pokédex
+React Hoteldex
   </h3>
 
 

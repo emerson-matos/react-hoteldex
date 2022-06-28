@@ -13,47 +13,55 @@ import { baseImageUrl } from "../api/axios";
 
 export const PAGINATE_SIZE = 6;
 
-export type Pokemon = {
-  id: number;
+// export type Pokemon = {
+//   id: number;
+//   name: string;
+//   baseExperience: number;
+//   height: number;
+//   isDefault: boolean;
+//   order: number;
+//   weight: number;
+//   abilities: {
+//     isHidden: boolean;
+//     slot: number;
+//     ability: NamedAPIResource;
+//   }[];
+//   forms: NamedAPIResource[];
+//   moves: {
+//     move: NamedAPIResource;
+//   }[];
+//   sprites: {
+//     frontDefault: string;
+//     frontShiny: string;
+//     frontFemale: string;
+//     frontShinyFemale: string;
+//     backDefault: string;
+//     backShiny: string;
+//     backFemale: string;
+//     backShinyFemale: string;
+//   };
+//   species: NamedAPIResource[];
+//   stats: {
+//     baseStat: number;
+//     effort: number;
+//     stat: NamedAPIResource;
+//   }[];
+//   types: {
+//     slot: number;
+//     type: NamedAPIResource;
+//   }[];
+// };
+
+export type Hotel = {
+  placeId: string;
   name: string;
-  baseExperience: number;
-  height: number;
-  isDefault: boolean;
-  order: number;
-  weight: number;
-  abilities: {
-    isHidden: boolean;
-    slot: number;
-    ability: NamedAPIResource;
-  }[];
-  forms: NamedAPIResource[];
-  moves: {
-    move: NamedAPIResource;
-  }[];
-  sprites: {
-    frontDefault: string;
-    frontShiny: string;
-    frontFemale: string;
-    frontShinyFemale: string;
-    backDefault: string;
-    backShiny: string;
-    backFemale: string;
-    backShinyFemale: string;
-  };
-  species: NamedAPIResource[];
-  stats: {
-    baseStat: number;
-    effort: number;
-    stat: NamedAPIResource;
-  }[];
-  types: {
-    slot: number;
-    type: NamedAPIResource;
-  }[];
+  adrAddress: string;
+  formattedAddress: string;
+  icon: string;
 };
 
 type SliceState = {
-  data: (Pokemon | null)[];
+  data: (Hotel | null)[];
   status: {
     state: SliceStatus;
   };
@@ -82,31 +90,31 @@ const pokemonsSlice = createSlice({
     },
     getPokemonsReducer(
       state,
-      action: PayloadAction<{ pokemon: Pokemon; index: number; size: number }>
+      action: PayloadAction<{ pokemon: Hotel; index: number; size: number }>
     ) {
       const { pokemon, size, index } = action.payload;
 
       const isPokemonAlreadyExists = state.data.find(
         (existingPokemon) =>
-          existingPokemon !== null && existingPokemon.id === pokemon.id
+          existingPokemon !== null && existingPokemon.placeId === pokemon.placeId
       );
       if (!isPokemonAlreadyExists) {
         state.data[state.data.length - (size - index)] = pokemon;
       }
     },
-    getSinglePokemonReducer(
-      state,
-      action: PayloadAction<{ pokemon: Pokemon }>
-    ) {
-      const { pokemon } = action.payload;
-      const isPokemonAlreadyExists = state.data.find(
-        (existingPokemon) =>
-          existingPokemon !== null && existingPokemon.id === pokemon.id
-      );
-      if (!isPokemonAlreadyExists) {
-        state.data.push(pokemon);
-      }
-    },
+    // getSinglePokemonReducer(
+    //   state,
+    //   action: PayloadAction<{ pokemon: Pokemon }>
+    // ) {
+    //   const { pokemon } = action.payload;
+    //   const isPokemonAlreadyExists = state.data.find(
+    //     (existingPokemon) =>
+    //       existingPokemon !== null && existingPokemon.id === pokemon.id
+    //   );
+    //   if (!isPokemonAlreadyExists) {
+    //     state.data.push(pokemon);
+    //   }
+    // },
     resetPokemonsReducer(state, action) {
       state.data = [];
     },
@@ -121,7 +129,7 @@ export const {
   initializePokemonsReducer,
   getPokemonsReducer,
   resetPokemonsReducer,
-  getSinglePokemonReducer,
+  // getSinglePokemonReducer,
 } = pokemonsSlice.actions;
 
 export const pokemonsSelector = (state: RootState) => state.pokemons;
@@ -134,22 +142,13 @@ export const getPokemons = wrapReduxAsyncHandler(
     const size = PAGINATE_SIZE - (pokemons.length % PAGINATE_SIZE);
     const results = cachedPokemons.slice(page, page + size);
     dispatch(initializePokemonsReducer({ size }));
-
-    for await (const [index, { url }] of results.entries()) {
-      const pokemonId = Number(url.split("/").slice(-2)[0]);
-      const pokemon = await fromApi.getPokemonByNameOrId(pokemonId);
-      const pokemonImageUrl = transformSpriteToBaseImage(
-        pokemon.id,
-        baseImageUrl
-      );
-
+    console.log("passou aqui3");
+    for await (const [index, hotel] of results.entries()) {
+      console.log("passou aqui4", hotel);
       dispatch(
         getPokemonsReducer({
           pokemon: {
-            ...camelcaseObject(pokemon),
-            sprites: {
-              frontDefault: pokemonImageUrl,
-            },
+            ...camelcaseObject(hotel),
           },
           size,
           index,
@@ -159,36 +158,36 @@ export const getPokemons = wrapReduxAsyncHandler(
   }
 );
 
-export const getPokemonById = wrapReduxAsyncHandler(
-  statusHandler,
-  async (dispatch, { pokemonId }) => {
-    const pokemon = await fromApi.getPokemonByNameOrId(pokemonId);
-    const pokemonImageUrl = transformSpriteToBaseImage(
-      pokemon.id,
-      baseImageUrl
-    );
-    const transformedPokemon = {
-      ...camelcaseObject(pokemon),
-      sprites: { frontDefault: pokemonImageUrl },
-    };
-    dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
-  }
-);
+// export const getPokemonById = wrapReduxAsyncHandler(
+//   statusHandler,
+//   async (dispatch, { pokemonId }) => {console.log("passou aqui");
+//     const pokemon = await fromApi.getPokemonByNameOrId(pokemonId);
+//     const pokemonImageUrl = transformSpriteToBaseImage(
+//       pokemon.id,
+//       baseImageUrl
+//     );
+//     const transformedPokemon = {
+//       ...camelcaseObject(pokemon),
+//       sprites: { frontDefault: pokemonImageUrl },
+//     };
+//     dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
+//   }
+// );
 
 export const getPokemonsDynamically = wrapReduxAsyncHandler(
   statusHandler,
   async (dispatch, { pokemonIds }) => {
-    for await (const id of pokemonIds) {
-      const pokemon = await fromApi.getPokemonByNameOrId(id);
-      const pokemonImageUrl = transformSpriteToBaseImage(
-        pokemon.id,
-        baseImageUrl
-      );
-      const transformedPokemon = {
-        ...camelcaseObject(pokemon),
-        sprites: { frontDefault: pokemonImageUrl },
-      };
-      dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
-    }
+    // for await (const id of pokemonIds) {console.log("passou aqui2");
+    //   const pokemon = await fromApi.getPokemonByNameOrId(id);
+    //   const pokemonImageUrl = transformSpriteToBaseImage(
+    //     pokemon.id,
+    //     baseImageUrl
+    //   );
+    //   const transformedPokemon = {
+    //     ...camelcaseObject(pokemon),
+    //     sprites: { frontDefault: pokemonImageUrl },
+    //   };
+    //   // dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
+    // }
   }
 );

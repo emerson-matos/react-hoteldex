@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import ProgressiveImage from "react-progressive-image-loading";
 import { useSpring, animated } from "react-spring";
-import { Pokemon } from "../features/pokemonSlice";
-import { Species } from "../features/speciesSlice";
+import { Hotel } from "../features/pokemonSlice";
 import { PokemonTypePlaceholders } from "../globals";
 import { useResize } from "../hooks/useResize";
 import { leftPad } from "../utils/leftPad";
@@ -38,14 +37,12 @@ const PokemonImageStyling = {
 };
 
 type Props = {
-  pokemon: Pokemon;
-  species: Species;
+  hotel: Hotel;
   selectedBackgroundColor: { light: string; medium: string };
 };
 
 const PokemonDetailsHeader = ({
-  pokemon,
-  species,
+  hotel,
   selectedBackgroundColor,
 }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -55,16 +52,8 @@ const PokemonDetailsHeader = ({
     config: { mass: 10, tension: 550, friction: 140 },
   }));
 
-  const kanjiName = species.names.find(
-    (name) => name.language.name === "ja-Hrkt"
-  );
-  const imagePlaceholder = pokemon.types.map(({ type }) => {
-    const [[, image]] = Object.entries(PokemonTypePlaceholders).filter(
-      ([key, _]) => key === type.name
-    );
-
-    return image;
-  });
+  const kanjiName = "ja-Hrkt"
+  const imagePlaceholder = hotel.icon;
 
   return (
     <>
@@ -79,16 +68,16 @@ const PokemonDetailsHeader = ({
       >
         <div className="px-4 md:px-8">
           <p className="text-md mt-4 text-white font-medium">
-            #{leftPad(pokemon.id, 3)}
+            {hotel.placeId}
           </p>
           <h1 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold pb-6 capitalize">
-            {pokemon.name}
+            {hotel.name}
           </h1>
         </div>
 
         <div className="relative text-center mx-auto w-full h-96 mt-8 lg:mt-24">
           <h1 className="absolute -mt-2 text-6xl z-0 w-full text-white opacity-50 font-extrabold overflow-hidden">
-            {kanjiName && kanjiName.name}
+            {kanjiName}
           </h1>
 
           <animated.div
@@ -111,9 +100,9 @@ const PokemonDetailsHeader = ({
           >
             <ProgressiveImage
               preview={imagePlaceholder[0]}
-              src={pokemon.sprites.frontDefault}
+              src={hotel.icon}
               render={(src, style) => (
-                <img src={src} alt={pokemon.name} style={style} />
+                <img src={src} alt={hotel.name} style={style} />
               )}
             />
           </animated.div>

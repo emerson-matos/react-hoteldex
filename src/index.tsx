@@ -12,10 +12,10 @@ ReactDOM.render(
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>React Pokédex</title>
+        <title>React Hoteldex</title>
         <meta
           name="description"
-          content="a simple pokédex for your pokemon needs."
+          content="a simple Hoteldex"
         />
       </Helmet>
       <Provider store={store}>

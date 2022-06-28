@@ -1,60 +1,39 @@
 import React from "react";
-import { Pokemon } from "../features/pokemonSlice";
-import { Species } from "../features/speciesSlice";
+import { Hotel } from "../features/pokemonSlice";
 import { importImages } from "../globals";
 import { leftPad } from "../utils/leftPad";
 import PokemonInformation from "./PokemonInformation";
 
 type Props = {
-  pokemon: Pokemon;
-  species: Species;
+  hotel: Hotel;
 };
 
-const PokemonDetailsBiography = ({ pokemon, species }: Props) => {
-  const inches = (pokemon.height * 3.93701).toFixed(0);
+const PokemonDetailsBiography = ({ hotel }: Props) => {
+  const inches = (2 * 3.93701).toFixed(0);
   const feet = Math.floor(Number(inches) / 12);
-  const genderPercentage =
-    species.genderRate !== -1 ? (species.genderRate / 8) * 100 : -1;
+  const genderPercentage =  -1;
 
   return (
     <>
       <div>
         <h2 className="font-semibold text-lg">Pokémon Data</h2>
         <p className="mt-4 text-darkerGray">
-          {
-            species.flavorTextEntries.find(
-              (text) => text.language.name === "en"
-            )?.flavorText
-          }
+            "alo"
         </p>
         <ul className="mt-5">
           <PokemonInformation
             title="Species"
-            content={
-              species.genera.find((gen) => gen.language.name === "en")?.genus
-            }
+            content= "MALE"
           />
           <PokemonInformation
             title="Height"
             content={`${feet}'${leftPad(Number(inches) % 12, 2)}" (${
-              pokemon.height / 10
+              2 / 10
             }m)`}
           />
           <PokemonInformation
             title="Weight"
-            content={`${(pokemon.weight / 10).toFixed(1)} kg`}
-          />
-          <PokemonInformation
-            title="Abilities"
-            content={pokemon.abilities.map((ability, index) => (
-              <li
-                key={`ability=${ability.ability.name}`}
-                className="capitalize"
-              >
-                {index + 1}. {ability.ability.name}{" "}
-                {ability.isHidden && "(Hidden Ability)"}
-              </li>
-            ))}
+            content={`${(2 / 10).toFixed(1)} kg`}
           />
           <PokemonInformation
             title="Gender"
@@ -92,20 +71,20 @@ const PokemonDetailsBiography = ({ pokemon, species }: Props) => {
         <ul className="mt-5">
           <PokemonInformation
             title="Base Exp"
-            content={pokemon.baseExperience || 0}
+            content={0}
           />
           <PokemonInformation
             title="Base Happiness"
-            content={species.baseHappiness || 0}
+            content={0}
           />
           <PokemonInformation
             title="Catch Rate"
-            content={`${((species.captureRate / 255) * 100).toFixed(1)}%`}
+            content={`${1}%`}
           />
           <PokemonInformation
             title="Growth Rate"
             content={
-              <span className="capitalize">{species.growthRate.name}</span>
+              <span className="capitalize">{"NAME"}</span>
             }
           />
         </ul>

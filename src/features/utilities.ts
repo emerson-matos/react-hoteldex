@@ -37,6 +37,7 @@ export const wrapReduxAsyncHandler = (
     })
     .catch((err) => {
       console.error(err);
+      dispatch(statusHandler.error(err));
     });
 };
 

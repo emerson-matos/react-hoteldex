@@ -68,26 +68,6 @@ const cachedPokemonsSlice = createSlice({
 
       console.log(state.data);
     },
-    filterPokemonsByGenerationReducer(
-      state,
-      action: PayloadAction<{
-        selectedGeneration: PokemonGenerationsEnum | null;
-      }>
-    ) {
-      const { selectedGeneration } = action.payload;
-      let cache: (NamedAPIResource & { distance: number })[] = state.cache;
-      if (selectedGeneration) {
-        const generations = Object.entries(PokemonGenerationsEnum);
-        let startingIndex: number = 0;
-        generations.forEach(([_, b], index) => {
-          if (b === selectedGeneration) {
-            startingIndex = index === 0 ? 0 : Number(generations[index - 1][1]);
-          }
-        });
-        cache = state.cache.slice(startingIndex, Number(selectedGeneration));
-      }
-      state.data = cache;
-    },
     randomizePokemonsReducer(state, action) {
       state.data = shuffle([...state.cache]);
     },
@@ -101,7 +81,6 @@ export const {
   success,
   getCachedPokemonsReducer,
   searchPokemonsByNameReducer,
-  filterPokemonsByGenerationReducer,
   randomizePokemonsReducer,
 } = cachedPokemonsSlice.actions;
 
@@ -113,15 +92,12 @@ export const cachedPokemonsSelector = (state: RootState) =>
 export const getCachedPokemons = wrapReduxAsyncHandler(
   statusHandler,
   async (dispatch) => {
-    const {
-      results,
-    }: { results: NamedAPIResource[] } = await fromApi.getPokemons(
-      Number(PokemonGenerationsEnum.GENERATION_7)
-    );
+    const results : NamedAPIResource[] = await fromApi.getPokemons();
     const transformedPokemons = results.map((res: NamedAPIResource) => ({
       ...res,
       distance: 0,
     }));
+    console.log("passou aqui" , transformedPokemons)
     dispatch(
       getCachedPokemonsReducer({
         cachedPokemons: camelcaseObject(transformedPokemons),

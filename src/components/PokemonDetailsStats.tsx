@@ -1,9 +1,9 @@
 import React from "react";
-import { Pokemon } from "../features/pokemonSlice";
+import { Hotel } from "../features/pokemonSlice";
 import PokemonStats from "./PokemonStats";
 
 type Props = {
-  pokemon: Pokemon;
+  hotel: Hotel;
 };
 
 const transformStatNames = (statName: string) => {
@@ -21,21 +21,12 @@ const transformStatNames = (statName: string) => {
   return transformed;
 };
 
-const PokemonDetailsStats = ({ pokemon }: Props) => {
-  const stats = pokemon.stats.map((resource) => ({
-    name: transformStatNames(resource.stat.name),
-    min: resource.baseStat,
-    max:
-      resource.stat.name === "hp"
-        ? Number(resource.baseStat) * 2 + 204
-        : (Number(resource.baseStat) * 2 + 99) * 1.1,
-  }));
-
+const PokemonDetailsStats = ({ hotel: pokemon }: Props) => {
   return (
     <>
       <h1 className="font-semibold text-lg mb-4">Base Stats</h1>
       <ul className="capitalize">
-        {stats.map((st) => (
+        {/* {stats.map((st) => (
           <PokemonStats
             key={`stats-${st.name}`}
             title={st.name}
@@ -50,8 +41,8 @@ const PokemonDetailsStats = ({ pokemon }: Props) => {
           </span>
           <div className="col-span-2 w-full flex items-center" />
           <span className="text-center text-darkerGray font-medium">Max</span>
-        </div>
-      </ul>
+        </div> */}
+      </ul> 
       <p className="mt-10 mb-6 text-darkerGray font-medium">
         Min & Max values are calculated for level 100 Pokemon. Minimum values
         are based on 0 EVs & 0 IVs, meanwhile Maximum values are based on 252

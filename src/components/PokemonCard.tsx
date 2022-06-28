@@ -1,5 +1,5 @@
 import React from "react";
-import { Pokemon } from "../features/pokemonSlice";
+import { Hotel } from "../features/pokemonSlice";
 import { PokemonTypeColors, PokemonTypePlaceholders } from "../globals";
 import { leftPad } from "../utils/leftPad";
 import Trail from "./Trail";
@@ -18,43 +18,32 @@ const ImageContainerStyling = {
   height: 175,
 };
 
-type Props = Pokemon;
+type Props = Hotel;
 
-const PokemonCard = ({ id, name, sprites, types }: Props) => {
+const PokemonCard = ({ placeId, name, icon, adrAddress }: Props) => {
   const history = useHistory();
 
-  const backgroundColors = types.map(({ type }) => {
-    const [[, backgroundColor]] = Object.entries(PokemonTypeColors).filter(
-      ([key, _]) => key === type.name
-    );
-
-    return backgroundColor;
-  });
-  const imagePlaceholder = types.map(({ type }) => {
-    const [[, image]] = Object.entries(PokemonTypePlaceholders).filter(
-      ([key, _]) => key === type.name
-    );
-
-    return image;
-  });
+  const backgroundColors = "grey"
+  const imagePlaceholder = icon
 
   return (
     <Trail open={true}>
       <div
         className="w-full rounded-lg overflow-hidden shadow-lg mx-auto cursor-pointer hover:shadow-2xl transition-all duration-200 ease-in-out transform hover:-translate-y-2"
         style={{
-          backgroundColor: backgroundColors[0].medium,
+          backgroundColor: backgroundColors,
         }}
-        onClick={() => history.push(`/pokemons/${id}`)}
+        onClick={() => history.push(`/pokemons/${placeId}`)}
       >
         <div
           className="py-32 mx-auto w-full flex items-center justify-center relative"
           style={{
-            backgroundColor: backgroundColors[0].medium,
+            backgroundColor: backgroundColors,
           }}
         >
           <p className="text-6xl font-semibold text-black text-opacity-25 absolute tracking-xl top-1/8 pointer-events-none">
-            #{leftPad(id, 3)}
+            {/* #{leftPad(placeId, 3)} */}
+            äqui
           </p>
 
           <div
@@ -65,12 +54,12 @@ const PokemonCard = ({ id, name, sprites, types }: Props) => {
               className="rounded-full absolute z-0 inset-x-auto mx-auto"
               style={{
                 ...MaskStyling,
-                backgroundColor: backgroundColors[0].light,
+                backgroundColor: backgroundColors,
               }}
             />
             <ProgressiveImage
               preview={imagePlaceholder[0]}
-              src={sprites.frontDefault}
+              src={icon}
               render={(src, style) => (
                 <img src={src} style={style} alt={name} />
               )}
@@ -80,7 +69,7 @@ const PokemonCard = ({ id, name, sprites, types }: Props) => {
 
         <div className="bg-white w-full pt-5 pb-8 text-center">
           <h1 className="capitalize font-semibold text-3xl mb-2">{name}</h1>
-          <div className="flex flex-wrap mx-auto justify-center">
+          {/* <div className="flex flex-wrap mx-auto justify-center">
             {types.map(({ type }, index) => {
               return (
                 <p
@@ -95,7 +84,7 @@ const PokemonCard = ({ id, name, sprites, types }: Props) => {
                 </p>
               );
             })}
-          </div>
+          </div> */}
         </div>
       </div>
     </Trail>
