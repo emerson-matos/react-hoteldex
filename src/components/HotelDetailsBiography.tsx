@@ -1,14 +1,14 @@
 import React from "react";
-import { Hotel } from "../features/pokemonSlice";
+import { Hotel } from "../features/hotelsSlice";
 import { importImages } from "../globals";
 import { leftPad } from "../utils/leftPad";
-import PokemonInformation from "./PokemonInformation";
+import HotelInformation from "./HotelInformation";
 
 type Props = {
   hotel: Hotel;
 };
 
-const PokemonDetailsBiography = ({ hotel }: Props) => {
+const HotelDetailsBiography = ({ hotel }: Props) => {
   const inches = (2 * 3.93701).toFixed(0);
   const feet = Math.floor(Number(inches) / 12);
   const genderPercentage =  -1;
@@ -21,21 +21,21 @@ const PokemonDetailsBiography = ({ hotel }: Props) => {
             "alo"
         </p>
         <ul className="mt-5">
-          <PokemonInformation
+          <HotelInformation
             title="Species"
             content= "MALE"
           />
-          <PokemonInformation
+          <HotelInformation
             title="Height"
             content={`${feet}'${leftPad(Number(inches) % 12, 2)}" (${
               2 / 10
             }m)`}
           />
-          <PokemonInformation
+          <HotelInformation
             title="Weight"
             content={`${(2 / 10).toFixed(1)} kg`}
           />
-          <PokemonInformation
+          <HotelInformation
             title="Gender"
             content={
               <span className="flex items-end justify-start">
@@ -69,19 +69,19 @@ const PokemonDetailsBiography = ({ hotel }: Props) => {
       <div className="my-8">
         <h2 className="font-semibold text-lg">Training</h2>
         <ul className="mt-5">
-          <PokemonInformation
+          <HotelInformation
             title="Base Exp"
             content={0}
           />
-          <PokemonInformation
+          <HotelInformation
             title="Base Happiness"
             content={0}
           />
-          <PokemonInformation
+          <HotelInformation
             title="Catch Rate"
             content={`${1}%`}
           />
-          <PokemonInformation
+          <HotelInformation
             title="Growth Rate"
             content={
               <span className="capitalize">{"NAME"}</span>
@@ -93,4 +93,4 @@ const PokemonDetailsBiography = ({ hotel }: Props) => {
   );
 };
 
-export default PokemonDetailsBiography;
+export default HotelDetailsBiography;

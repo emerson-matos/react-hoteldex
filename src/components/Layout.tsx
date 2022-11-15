@@ -15,7 +15,7 @@ const Layout = ({ children, title }: Props) => {
         <title>React Hoteldex {title && `| ${title}`}</title>
         <meta
           name="description"
-          content="a simple Hoteldex for your pokemon needs."
+          content="a simple Hoteldex for your hotel needs."
         />
       </Helmet>
       <Navbar />

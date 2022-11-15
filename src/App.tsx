@@ -1,32 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import SplashScreen from "./components/SplashScreen";
 import {
-  cachedPokemonsSelector,
-  getCachedPokemons,
-} from "./features/cachedPokemonsSlice";
+  cachedHotelsSelector,
+  getCachedHotels,
+} from "./features/cachedHotelsSlice";
 
 import { SliceStatus } from "./globals";
-import Routes from "./Routes";
+import Router from "./Routes";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const cachedPokemons = useSelector(cachedPokemonsSelector);
-
+  const cachedHotels = useSelector(cachedHotelsSelector);
   useEffect(() => {
-    dispatch(getCachedPokemons());
+    dispatch(getCachedHotels(cachedHotels.apikey));
     //eslint-disable-next-line
   }, []);
 
   return (
     <>
-      {cachedPokemons.status.state === SliceStatus.LOADING ||
-      cachedPokemons.status.state === SliceStatus.IDLE ? (
+      {cachedHotels.status.state === SliceStatus.LOADING ? (
         <SplashScreen />
       ) : (
         <BrowserRouter>
-          <Routes />
+          <Router />
         </BrowserRouter>
       )}
     </>

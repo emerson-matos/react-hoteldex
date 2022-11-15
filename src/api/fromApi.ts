@@ -2,15 +2,16 @@ import { HTTP_METHODS } from "../globals";
 import { createApiRequest } from "./axios";
 
 class ApiCallCreator {
-  getPokemons() {
+  getHotels(apikey: string) {
     return createApiRequest(
       `/google`,
       HTTP_METHODS.GET,
+      apikey,
       {}
     );
   }
-  getPokemonByNameOrId(id: number | string) {
-    return createApiRequest(`/pokemon/${id}/`, HTTP_METHODS.GET, {});
+  getHotelByNameOrId(id: number | string, apikey: string) {
+    return createApiRequest(`/hotel/${id}/`, HTTP_METHODS.GET, apikey, {});
   }
 }
 

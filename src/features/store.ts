@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { cachedPokemonsReducer } from "./cachedPokemonsSlice";
-import { pokemonsReducer } from "./pokemonSlice";
+import { cachedHotelsReducer } from "./cachedHotelsSlice";
+import { hotelsReducer } from "./hotelsSlice";
 
 export const rootReducer = combineReducers({
-  cachedPokemons: cachedPokemonsReducer,
-  pokemons: pokemonsReducer,
+  cachedHotels: cachedHotelsReducer,
+  hotels: hotelsReducer,
 });
 
 const store = configureStore({

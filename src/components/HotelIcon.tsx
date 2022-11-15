@@ -5,7 +5,7 @@ type Props = {
   src: string;
 };
 
-const PokemonIcon = ({ src, alt }: Props) => {
+const HotelIcon = ({ src, alt }: Props) => {
   return (
     <img
       src={src}
@@ -18,4 +18,4 @@ const PokemonIcon = ({ src, alt }: Props) => {
   );
 };
 
-export default PokemonIcon;
+export default HotelIcon;

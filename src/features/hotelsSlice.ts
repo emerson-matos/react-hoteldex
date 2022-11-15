@@ -74,12 +74,12 @@ const initialState: SliceState = {
   },
 };
 
-const pokemonsSlice = createSlice({
-  name: "pokemons",
+const hotelsSlice = createSlice({
+  name: "hotels",
   initialState,
   reducers: {
     ...statusHandlerReducer,
-    initializePokemonsReducer(state, action: PayloadAction<{ size: number }>) {
+    initializeHotelsReducer(state, action: PayloadAction<{ size: number }>) {
       const { size } = action.payload;
       const nullValues = new Array<null>(size).fill(null);
       if (state.data.length === 0) {
@@ -88,66 +88,66 @@ const pokemonsSlice = createSlice({
         state.data = state.data.concat(nullValues);
       }
     },
-    getPokemonsReducer(
+    getHotelsReducer(
       state,
-      action: PayloadAction<{ pokemon: Hotel; index: number; size: number }>
+      action: PayloadAction<{ hotel: Hotel; index: number; size: number }>
     ) {
-      const { pokemon, size, index } = action.payload;
+      const { hotel, size, index } = action.payload;
 
-      const isPokemonAlreadyExists = state.data.find(
-        (existingPokemon) =>
-          existingPokemon !== null && existingPokemon.placeId === pokemon.placeId
+      const isHotelAlreadyExists = state.data.find(
+        (existingHotel) =>
+          existingHotel !== null && existingHotel.placeId === hotel.placeId
       );
-      if (!isPokemonAlreadyExists) {
-        state.data[state.data.length - (size - index)] = pokemon;
+      if (!isHotelAlreadyExists) {
+        state.data[state.data.length - (size - index)] = hotel;
       }
     },
-    // getSinglePokemonReducer(
+    // getSingleHotelReducer(
     //   state,
-    //   action: PayloadAction<{ pokemon: Pokemon }>
+    //   action: PayloadAction<{ hotel: Hotel }>
     // ) {
-    //   const { pokemon } = action.payload;
-    //   const isPokemonAlreadyExists = state.data.find(
-    //     (existingPokemon) =>
-    //       existingPokemon !== null && existingPokemon.id === pokemon.id
+    //   const { hotel } = action.payload;
+    //   const isHotelAlreadyExists = state.data.find(
+    //     (existingHotel) =>
+    //       existingHotel !== null && existingHotel.id === hotel.id
     //   );
-    //   if (!isPokemonAlreadyExists) {
-    //     state.data.push(pokemon);
+    //   if (!isHotelAlreadyExists) {
+    //     state.data.push(hotel);
     //   }
     // },
-    resetPokemonsReducer(state, action) {
+    resetHotelsReducer(state, _action) {
       state.data = [];
     },
   },
 });
 
-export const pokemonsReducer = pokemonsSlice.reducer;
+export const hotelsReducer = hotelsSlice.reducer;
 export const {
   initialize,
   error,
   success,
-  initializePokemonsReducer,
-  getPokemonsReducer,
-  resetPokemonsReducer,
-  // getSinglePokemonReducer,
-} = pokemonsSlice.actions;
+  initializeHotelsReducer,
+  getHotelsReducer,
+  resetHotelsReducer,
+  // getSingleHotelReducer,
+} = hotelsSlice.actions;
 
-export const pokemonsSelector = (state: RootState) => state.pokemons;
+export const hotelsSelector = (state: RootState) => state.hotels;
 
 const statusHandler = { initialize, error, success };
 
-export const getPokemons = wrapReduxAsyncHandler(
+export const getHotels = wrapReduxAsyncHandler(
   statusHandler,
-  async (dispatch, { page, cachedPokemons, pokemons }) => {
-    const size = PAGINATE_SIZE - (pokemons.length % PAGINATE_SIZE);
-    const results = cachedPokemons.slice(page, page + size);
-    dispatch(initializePokemonsReducer({ size }));
+  async (dispatch, { page, cachedHotels, hotels }) => {
+    const size = PAGINATE_SIZE - (hotels.length % PAGINATE_SIZE);
+    const results = cachedHotels.slice(page, page + size);
+    dispatch(initializeHotelsReducer({ size }));
     console.log("passou aqui3");
     for await (const [index, hotel] of results.entries()) {
       console.log("passou aqui4", hotel);
       dispatch(
-        getPokemonsReducer({
-          pokemon: {
+        getHotelsReducer({
+          hotel: {
             ...camelcaseObject(hotel),
           },
           size,
@@ -158,36 +158,36 @@ export const getPokemons = wrapReduxAsyncHandler(
   }
 );
 
-// export const getPokemonById = wrapReduxAsyncHandler(
+// export const getHotelById = wrapReduxAsyncHandler(
 //   statusHandler,
-//   async (dispatch, { pokemonId }) => {console.log("passou aqui");
-//     const pokemon = await fromApi.getPokemonByNameOrId(pokemonId);
-//     const pokemonImageUrl = transformSpriteToBaseImage(
-//       pokemon.id,
+//   async (dispatch, { hotelId }) => {console.log("passou aqui");
+//     const hotel = await fromApi.getHotelByNameOrId(hotelId);
+//     const hotelImageUrl = transformSpriteToBaseImage(
+//       hotel.id,
 //       baseImageUrl
 //     );
-//     const transformedPokemon = {
-//       ...camelcaseObject(pokemon),
-//       sprites: { frontDefault: pokemonImageUrl },
+//     const transformedHotel = {
+//       ...camelcaseObject(hotel),
+//       sprites: { frontDefault: hotelImageUrl },
 //     };
-//     dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
+//     dispatch(getSingleHotelReducer({ hotel: transformedHotel }));
 //   }
 // );
 
-export const getPokemonsDynamically = wrapReduxAsyncHandler(
+export const getHotelsDynamically = wrapReduxAsyncHandler(
   statusHandler,
-  async (dispatch, { pokemonIds }) => {
-    // for await (const id of pokemonIds) {console.log("passou aqui2");
-    //   const pokemon = await fromApi.getPokemonByNameOrId(id);
-    //   const pokemonImageUrl = transformSpriteToBaseImage(
-    //     pokemon.id,
+  async (dispatch, { hotelIds }) => {
+    // for await (const id of hotelIds) {console.log("passou aqui2");
+    //   const hotel = await fromApi.getHotelByNameOrId(id);
+    //   const hotelImageUrl = transformSpriteToBaseImage(
+    //     hotel.id,
     //     baseImageUrl
     //   );
-    //   const transformedPokemon = {
-    //     ...camelcaseObject(pokemon),
-    //     sprites: { frontDefault: pokemonImageUrl },
+    //   const transformedHotel = {
+    //     ...camelcaseObject(hotel),
+    //     sprites: { frontDefault: hotelImageUrl },
     //   };
-    //   // dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
+    //   // dispatch(getSingleHotelReducer({ hotel: transformedHotel }));
     // }
   }
 );

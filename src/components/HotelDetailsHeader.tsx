@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import ProgressiveImage from "react-progressive-image-loading";
 import { useSpring, animated } from "react-spring";
-import { Hotel } from "../features/pokemonSlice";
-import { PokemonTypePlaceholders } from "../globals";
+import { Hotel } from "../features/hotelsSlice";
+import { HotelTypePlaceholders } from "../globals";
 import { useResize } from "../hooks/useResize";
 import { leftPad } from "../utils/leftPad";
 
@@ -26,7 +26,7 @@ const MaskStyling = {
   bottom: 55,
 };
 
-const PokemonImageStyling = {
+const HotelImageStyling = {
   width: ImageSize,
   height: ImageSize,
   display: "block",
@@ -41,7 +41,7 @@ type Props = {
   selectedBackgroundColor: { light: string; medium: string };
 };
 
-const PokemonDetailsHeader = ({
+const HotelDetailsHeader = ({
   hotel,
   selectedBackgroundColor,
 }: Props) => {
@@ -92,7 +92,7 @@ const PokemonDetailsHeader = ({
 
           <animated.div
             style={{
-              ...PokemonImageStyling,
+              ...HotelImageStyling,
               position: "absolute",
               //@ts-ignore
               transform: props.xy.interpolate(trans2),
@@ -113,4 +113,4 @@ const PokemonDetailsHeader = ({
   );
 };
 
-export default PokemonDetailsHeader;
+export default HotelDetailsHeader;

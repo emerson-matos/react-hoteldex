@@ -42,8 +42,8 @@ export const wrapReduxAsyncHandler = (
 };
 
 export const transformSpriteToBaseImage = (
-  pokemonId: number,
+  hotelId: number,
   baseUrl: string
 ): string => {
-  return baseUrl + leftPad(pokemonId, 3) + ".png";
+  return baseUrl + leftPad(hotelId, 3) + ".png";
 };

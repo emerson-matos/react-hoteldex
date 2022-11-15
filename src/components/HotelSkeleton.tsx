@@ -1,6 +1,6 @@
 import React from "react";
 
-const PokemonSkeleton = () => {
+const HotelSkeleton = () => {
   return (
     <div
       className="w-full rounded-lg overflow-hidden shadow-lg mx-auto cursor-pointer hover:shadow-2xl transition-all duration-75 ease-in-out"
@@ -54,4 +54,4 @@ const PokemonSkeleton = () => {
     </div>
   );
 };
-export default PokemonSkeleton;
+export default HotelSkeleton;

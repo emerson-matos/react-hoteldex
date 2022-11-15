@@ -13,7 +13,7 @@ export enum HTTP_METHODS {
   PATCH = "PATCH",
 }
 
-export const PokemonTypeColors = {
+export const HotelTypeColors = {
   normal: {
     light: "#CDCDB9",
     medium: "#C4C4A4",
@@ -94,27 +94,27 @@ export const importImages = (image: string, filetype?: string) => {
   }`;
 };
 
-export const importPokemonImage = (image: string) => {
-  return `${process.env.PUBLIC_URL}/assets/pokemons/${image}.png`;
+export const importHotelImage = (image: string) => {
+  return `${process.env.PUBLIC_URL}/assets/hotels/${image}.png`;
 };
 
-export const PokemonTypePlaceholders = {
-  normal: importPokemonImage("togepi"),
-  fire: importPokemonImage("charizard"),
-  fighting: importPokemonImage("lucario"),
-  water: importPokemonImage("blastoise"),
-  flying: importPokemonImage("aerodactyl"),
-  grass: importPokemonImage("venusaur"),
-  poison: importPokemonImage("seviper"),
-  electric: importPokemonImage("pikachu"),
-  ground: importPokemonImage("diglett"),
-  psychic: importPokemonImage("mew"),
-  rock: importPokemonImage("onix"),
-  ice: importPokemonImage("regice"),
-  bug: importPokemonImage("butterfree"),
-  dragon: importPokemonImage("dragonite"),
-  ghost: importPokemonImage("ganger"),
-  dark: importPokemonImage("weavile"),
-  steel: importPokemonImage("klinklang"),
-  fairy: importPokemonImage("clefable"),
+export const HotelTypePlaceholders = {
+  normal: importHotelImage("togepi"),
+  fire: importHotelImage("charizard"),
+  fighting: importHotelImage("lucario"),
+  water: importHotelImage("blastoise"),
+  flying: importHotelImage("aerodactyl"),
+  grass: importHotelImage("venusaur"),
+  poison: importHotelImage("seviper"),
+  electric: importHotelImage("pikachu"),
+  ground: importHotelImage("diglett"),
+  psychic: importHotelImage("mew"),
+  rock: importHotelImage("onix"),
+  ice: importHotelImage("regice"),
+  bug: importHotelImage("butterfree"),
+  dragon: importHotelImage("dragonite"),
+  ghost: importHotelImage("ganger"),
+  dark: importHotelImage("weavile"),
+  steel: importHotelImage("klinklang"),
+  fairy: importHotelImage("clefable"),
 };

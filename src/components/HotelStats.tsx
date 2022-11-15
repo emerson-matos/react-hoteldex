@@ -5,7 +5,7 @@ type Props = {
   max: number;
 };
 
-const PokemonStats = ({ title, min, max }: Props) => {
+const HotelStats = ({ title, min, max }: Props) => {
   return (
     <div className="grid grid-cols-5 gap-2 md:gap-4 lg:gap-8 mt-2 md:mt-3">
       <span className="text-darkerGray font-medium">{title}</span>
@@ -25,4 +25,4 @@ const PokemonStats = ({ title, min, max }: Props) => {
     </div>
   );
 };
-export default PokemonStats;
+export default HotelStats;

@@ -1,6 +1,6 @@
 import React from "react";
-import { Hotel } from "../features/pokemonSlice";
-import PokemonStats from "./PokemonStats";
+import { Hotel } from "../features/hotelsSlice";
+import HotelStats from "./HotelStats";
 
 type Props = {
   hotel: Hotel;
@@ -21,13 +21,13 @@ const transformStatNames = (statName: string) => {
   return transformed;
 };
 
-const PokemonDetailsStats = ({ hotel: pokemon }: Props) => {
+const HotelDetailsStats = ({ hotel: hotel }: Props) => {
   return (
     <>
       <h1 className="font-semibold text-lg mb-4">Base Stats</h1>
       <ul className="capitalize">
         {/* {stats.map((st) => (
-          <PokemonStats
+          <HotelStats
             key={`stats-${st.name}`}
             title={st.name}
             min={st.min}
@@ -44,7 +44,7 @@ const PokemonDetailsStats = ({ hotel: pokemon }: Props) => {
         </div> */}
       </ul> 
       <p className="mt-10 mb-6 text-darkerGray font-medium">
-        Min & Max values are calculated for level 100 Pokemon. Minimum values
+        Min & Max values are calculated for level 100 Hotel. Minimum values
         are based on 0 EVs & 0 IVs, meanwhile Maximum values are based on 252
         EVs & 31 IVs.
       </p>
@@ -52,4 +52,4 @@ const PokemonDetailsStats = ({ hotel: pokemon }: Props) => {
   );
 };
 
-export default PokemonDetailsStats;
+export default HotelDetailsStats;

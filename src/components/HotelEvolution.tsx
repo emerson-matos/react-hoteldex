@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image-loading";
-import { Hotel } from "../features/pokemonSlice";
-import { PokemonTypePlaceholders } from "../globals";
+import { Hotel } from "../features/hotelsSlice";
+import { HotelTypePlaceholders } from "../globals";
 import { leftPad } from "../utils/leftPad";
 
 import { AiOutlineCaretDown, AiOutlineCaretRight } from "react-icons/ai";
@@ -30,7 +30,7 @@ type Props = {
   selectedBackgroundColor: { light: string; medium: string };
 };
 
-const PokemonEvolution = ({
+const HotelEvolution = ({
   hotel,
   selectedBackgroundColor,
 }: Props) => {
@@ -50,7 +50,7 @@ const PokemonEvolution = ({
             className="rounded-full absolute inset-x-auto mx-auto z-0 inline-block left-0 right-0"
           />
           <div
-            onClick={() => history.push(`/pokemons/${hotel.placeId}`)}
+            onClick={() => history.push(`/hotels/${hotel.placeId}`)}
             className="cursor-pointer transform hover:-translate-y-2 transition-all duration-300"
             style={{
               ...ImageContainerStyling,
@@ -92,4 +92,4 @@ const PokemonEvolution = ({
   );
 };
 
-export default PokemonEvolution;
+export default HotelEvolution;

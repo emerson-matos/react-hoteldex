@@ -3,29 +3,29 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 import Layout from "../components/Layout";
-import PokemonDetailsBiography from "../components/PokemonDetailsBiography";
-import PokemonDetailsEvolutions from "../components/PokemonDetailsEvolutions";
-import PokemonDetailsHeader from "../components/PokemonDetailsHeader";
-import PokemonDetailsStats from "../components/PokemonDetailsStats";
+import HotelDetailsBiography from "../components/HotelDetailsBiography";
+import HotelDetailsEvolutions from "../components/HotelDetailsEvolutions";
+import HotelDetailsHeader from "../components/HotelDetailsHeader";
+import HotelDetailsStats from "../components/HotelDetailsStats";
 import Tab from "../components/Tab";
 import {
-  pokemonsSelector,
-} from "../features/pokemonSlice";
-import { PokemonTypeColors, SliceStatus } from "../globals";
+  hotelsSelector,
+} from "../features/hotelsSlice";
+import { HotelTypeColors, SliceStatus } from "../globals";
 import { ScaleLoader } from "react-spinners";
 import { useTransition, animated } from "react-spring";
 import { capitalize } from "../utils/capitalize";
 
-type PokemonTabs = "biography" | "stats" | "evolutions";
+type HotelTabs = "biography" | "stats" | "evolutions";
 
 interface MatchParams {
   id: string;
 }
 
-const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
+const HotelDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
   const { id } = match.params;
   const history = useHistory();
-  const [activeTab, setActiveTab] = useState<PokemonTabs>("biography");
+  const [activeTab, setActiveTab] = useState<HotelTabs>("biography");
   const transitions = useTransition(activeTab, (p) => p, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -35,16 +35,16 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
     },
   });
 
-  const pokemons = useSelector(pokemonsSelector);
-  const [selectedEvolutionPokemonIds] =
+  const hotels = useSelector(hotelsSelector);
+  const [selectedEvolutionHotelIds] =
     useState<number[]>([]);
 
-  // const selectedPokemon = pokemons.data.find(
-  //   (pokemon) => pokemon !== null && pokemon.id === Number(id)
+  // const selectedHotel = hotels.data.find(
+  //   (hotel) => hotel !== null && hotel.id === Number(id)
   // );
 
-  // const backgroundColors = selectedPokemon?.types.map(({ type }) => {
-  //   const [[, backgroundColor]] = Object.entries(PokemonTypeColors).filter(
+  // const backgroundColors = selectedHotel?.types.map(({ type }) => {
+  //   const [[, backgroundColor]] = Object.entries(HotelTypeColors).filter(
   //     ([key, _]) => key === type.name
   //   );
 
@@ -54,11 +54,11 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
   // const selectedBackgroundColor = backgroundColors && backgroundColors[0];
 
   const isPageLoading =
-    pokemons.status.state === SliceStatus.IDLE ||
-    pokemons.status.state === SliceStatus.LOADING;
+    hotels.status.state === SliceStatus.IDLE ||
+    hotels.status.state === SliceStatus.LOADING;
 
   return (<div></div>
-    // <Layout title={capitalize(selectedPokemon?.name)}>
+    // <Layout title={capitalize(selectedHotel?.name)}>
     //   {isPageLoading ? (
     //     <div className="text-center mx-auto mt-12">
     //       <ScaleLoader color="#E3350D" radius={16} />
@@ -66,7 +66,7 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
     //   ) : (
     //     <>
     //       <>
-    //         {selectedPokemon && selectedBackgroundColor && (
+    //         {selectedHotel && selectedBackgroundColor && (
     //           <div className="pb-8">
     //             <button
     //               className="text-primary font-semibold transform hover:-translate-y-1 transition-transform ease-in duration-150 focus:outline-none"
@@ -81,8 +81,8 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
     //                   selectedBackgroundColor && selectedBackgroundColor.medium,
     //               }}
     //             >
-    //               <PokemonDetailsHeader
-    //                 pokemon={selectedPokemon}
+    //               <HotelDetailsHeader
+    //                 hotel={selectedHotel}
     //                 selectedBackgroundColor={selectedBackgroundColor}
     //               />
     //               <div className="bg-white lg:mt-0 rounded-t-3xl rounded-b-lg lg:rounded-t-none lg:rounded-b-none lg:rounded-r-lg overflow-hidden w-full pt-16 lg:pt-8 px-6 md:px-12 lg:px-24">
@@ -109,26 +109,26 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
     //                 <div className="relative mt-8 lg:h-178">
     //                   {transitions.map(({ item, key, props }) => {
     //                     let page: JSX.Element = (
-    //                       <PokemonDetailsBiography pokemon={selectedPokemon} />
+    //                       <HotelDetailsBiography hotel={selectedHotel} />
     //                     );
 
     //                     switch (item) {
     //                       case "biography":
     //                         page = (
-    //                           <PokemonDetailsBiography
-    //                             pokemon={selectedPokemon}
+    //                           <HotelDetailsBiography
+    //                             hotel={selectedHotel}
     //                           />
     //                         );
     //                         break;
     //                       case "stats":
     //                         page = (
-    //                           <PokemonDetailsStats hotel={selectedPokemon} />
+    //                           <HotelDetailsStats hotel={selectedHotel} />
     //                         );
     //                         break;
     //                       case "evolutions":
     //                         page = (
-    //                           <PokemonDetailsEvolutions
-    //                             selectedIds={selectedEvolutionPokemonIds}
+    //                           <HotelDetailsEvolutions
+    //                             selectedIds={selectedEvolutionHotelIds}
     //                             selectedBackgroundColor={
     //                               selectedBackgroundColor
     //                             }
@@ -163,4 +163,4 @@ const PokemonDetailsPage = ({ match }: RouteComponentProps<MatchParams>) => {
     // </Layout>
   );
 };
-export default PokemonDetailsPage;
+export default HotelDetailsPage;

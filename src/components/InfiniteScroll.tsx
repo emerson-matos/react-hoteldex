@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getPokemons, PAGINATE_SIZE } from "../features/pokemonSlice";
+import { getHotels, PAGINATE_SIZE } from "../features/hotelsSlice";
 import LoadButton from "./LoadButton";
 import { Waypoint as ReactWaypoint } from "react-waypoint";
 
@@ -17,7 +17,7 @@ const InfiniteScrollContext = createContext<ContextType>({
   page: 0,
   setPage: () => {},
   isLoading: true,
-  paginationHandler: getPokemons,
+  paginationHandler: getHotels,
   data: [],
 });
 

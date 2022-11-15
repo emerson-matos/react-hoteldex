@@ -1,19 +1,19 @@
 import React from "react";
-import PokemonForm from "../components/PokemonForm";
+import HotelForm from "../components/HotelForm";
 
 import Layout from "../components/Layout";
 import InfiniteScroll from "../components/InfiniteScroll";
-import PokemonCard from "../components/PokemonCard";
+import HotelCard from "../components/HotelCard";
 import { useSelector } from "react-redux";
-import { pokemonsSelector, getPokemons } from "../features/pokemonSlice";
+import { hotelsSelector, getHotels } from "../features/hotelsSlice";
 import { SliceStatus } from "../globals";
-import { cachedPokemonsSelector } from "../features/cachedPokemonsSlice";
-import PokemonSkeleton from "../components/PokemonSkeleton";
+import { cachedHotelsSelector } from "../features/cachedHotelsSlice";
+import HotelSkeleton from "../components/HotelSkeleton";
 import { AiFillGithub } from "react-icons/ai";
 
-const PokemonsPage = () => {
-  const pokemons = useSelector(pokemonsSelector);
-  const cachedPokemons = useSelector(cachedPokemonsSelector);
+const HotelsPage = () => {
+  const hotels = useSelector(hotelsSelector);
+  const cachedHotels = useSelector(cachedHotelsSelector);
 
   return (
     <Layout title="Home">
@@ -30,49 +30,47 @@ const PokemonsPage = () => {
           <AiFillGithub size={32} />
         </a>
       </div>
-      {(
-        cachedPokemons.status.state === SliceStatus.ERROR
-      ) && (  
-      <div role="alert">
-        <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-          Danger
+      {cachedHotels.status.state === SliceStatus.ERROR && (
+        <div role="alert">
+          <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            Error
+          </div>
+          <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p>Something not ideal might be happening</p>
+          </div>
         </div>
-        <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-          <p>Something not ideal might be happening.</p>
-        </div>
-      </div>
       )}
       <InfiniteScroll
-        data={pokemons.data}
+        data={hotels.data}
         paginationHandler={(page: number) =>
-          getPokemons({
+          getHotels({
             page,
-            cachedPokemons: cachedPokemons.data,
-            pokemons: pokemons.data,
+            cachedHotels: cachedHotels.data,
+            hotels: hotels.data,
           })
         }
-        isLoading={pokemons.status.state === SliceStatus.LOADING}
+        isLoading={hotels.status.state === SliceStatus.LOADING}
       >
         {({ mutatePage }) => (
           <>
             <div className="my-4 md:my-6 lg:my-8 w-full">
-              <PokemonForm
-                placeholder="Search for a pokémon..."
+              <HotelForm
+                placeholder="Search for a hotel name..."
                 mutatePage={mutatePage}
               />
             </div>
             <div className="mx-auto w-full text-center">
               {!(
-                cachedPokemons.status.state === SliceStatus.LOADING ||
-                cachedPokemons.status.state === SliceStatus.IDLE
+                cachedHotels.status.state === SliceStatus.LOADING ||
+                cachedHotels.status.state === SliceStatus.IDLE
               ) && (
                 <>
                   <InfiniteScroll.Container>
-                    {pokemons.data.map((pokemon, index) =>
-                      pokemon === null ? (
-                        <PokemonSkeleton key={`loading-${index}`} />
+                    {hotels.data.map((hotel, index) =>
+                      hotel === null ? (
+                        <HotelSkeleton key={`loading-${index}`} />
                       ) : (
-                        <PokemonCard key={pokemon.placeId} {...pokemon} />
+                        <HotelCard key={hotel.placeId} {...hotel} />
                       )
                     )}
                   </InfiniteScroll.Container>
@@ -86,4 +84,4 @@ const PokemonsPage = () => {
     </Layout>
   );
 };
-export default PokemonsPage;
+export default HotelsPage;

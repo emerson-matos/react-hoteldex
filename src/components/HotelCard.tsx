@@ -1,6 +1,6 @@
 import React from "react";
-import { Hotel } from "../features/pokemonSlice";
-import { PokemonTypeColors, PokemonTypePlaceholders } from "../globals";
+import { Hotel } from "../features/hotelsSlice";
+import { HotelTypeColors, HotelTypePlaceholders } from "../globals";
 import { leftPad } from "../utils/leftPad";
 import Trail from "./Trail";
 import ProgressiveImage from "react-progressive-image-loading";
@@ -20,11 +20,12 @@ const ImageContainerStyling = {
 
 type Props = Hotel;
 
-const PokemonCard = ({ placeId, name, icon, adrAddress }: Props) => {
+const HotelCard = ({ placeId, name, icon, adrAddress }: Props) => {
   const history = useHistory();
 
-  const backgroundColors = "grey"
-  const imagePlaceholder = icon
+  const backgroundColors = "grey";
+  const imagePlaceholder = icon;
+  const types = [{type: 5}, {type: 2}, {type: 3}];
 
   return (
     <Trail open={true}>
@@ -33,7 +34,7 @@ const PokemonCard = ({ placeId, name, icon, adrAddress }: Props) => {
         style={{
           backgroundColor: backgroundColors,
         }}
-        onClick={() => history.push(`/pokemons/${placeId}`)}
+        onClick={() => history.push(`/hotels/${placeId}`)}
       >
         <div
           className="py-32 mx-auto w-full flex items-center justify-center relative"
@@ -42,8 +43,7 @@ const PokemonCard = ({ placeId, name, icon, adrAddress }: Props) => {
           }}
         >
           <p className="text-6xl font-semibold text-black text-opacity-25 absolute tracking-xl top-1/8 pointer-events-none">
-            {/* #{leftPad(placeId, 3)} */}
-            äqui
+            {placeId}
           </p>
 
           <div
@@ -69,26 +69,28 @@ const PokemonCard = ({ placeId, name, icon, adrAddress }: Props) => {
 
         <div className="bg-white w-full pt-5 pb-8 text-center">
           <h1 className="capitalize font-semibold text-3xl mb-2">{name}</h1>
-          {/* <div className="flex flex-wrap mx-auto justify-center">
-            {types.map(({ type }, index) => {
-              return (
-                <p
-                  key={`${id}-${type.name}`}
-                  className={
-                    "font-bold uppercase text-sm" +
-                    (index !== types.length - 1 ? " mr-6" : "")
-                  }
-                  style={{ color: backgroundColors[index].medium }}
-                >
-                  {type.name}
-                </p>
-              );
-            })}
-          </div> */}
+          {
+            <div className="flex flex-wrap mx-auto justify-center">
+              {types.map(({ type }, index) => {
+                return (
+                  <p
+                    key={`${placeId}-${type}`}
+                    className={
+                      "font-bold uppercase text-sm" +
+                      (index !== types.length - 1 ? " mr-6" : "")
+                    }
+                    style={{ color: backgroundColors }}
+                  >
+                    {type}
+                  </p>
+                );
+              })}
+            </div>
+          }
         </div>
       </div>
     </Trail>
   );
 };
 
-export default PokemonCard;
+export default HotelCard;

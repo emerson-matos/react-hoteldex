@@ -8,6 +8,7 @@ const axios = Axios.create({
 export const createApiRequest = async (
   url: string,
   method: HTTP_METHODS,
+  apikey: string,
   data: any
 ) => {
   try {
@@ -17,6 +18,7 @@ export const createApiRequest = async (
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "X-Google-Authorization": apikey,
       },
       data,
     });
@@ -30,6 +32,6 @@ export const createApiRequest = async (
   }
 };
 export const baseImageUrl =
-  "https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/";
+  "https://raw.githubusercontent.com/HybridShivam/Hotel/master/assets/images/";
 
 export default axios;
